@@ -1,4 +1,5 @@
 const Product = require('../models/product');
+const Utils = require('../utils/util');
 
 const get = async (req, res) => {
     try {
@@ -23,8 +24,8 @@ const getById = async (req, res) => {
 
 const post = async (req, res) => {
     try {
-        console.log("req.body", req.body);
         const product = new Product(req.body);
+        product.Code = `SP_${Utils.generateRandomNumber()}`;
         await product.save();
         res.status(200).send(product);
     } catch (error) {
