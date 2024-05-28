@@ -1,9 +1,9 @@
-const User = require('./../models/user');
+const Product = require('../models/product');
 
 const get = async (req, res) => {
     try {
-        const users = await User.find();
-        res.status(200).send(users);
+        const products = await Product.find();
+        res.status(200).send(products);
     } catch (error) {
         res.status(500).send(error);
     }
@@ -11,11 +11,11 @@ const get = async (req, res) => {
 
 const getById = async (req, res) => {
     try {
-        const user = await User.findById(req.params.id);
+        const product = await Product.findById(req.params.id);
         if (!user) {
             return res.status(404).send();
         }
-        res.status(200).send(user);
+        res.status(200).send(product);
     } catch (error) {
         res.status(500).send(error);
     }
@@ -24,9 +24,9 @@ const getById = async (req, res) => {
 const post = async (req, res) => {
     try {
         console.log("req.body", req.body);
-        const user = new User(req.body);
-        await user.save();
-        res.status(200).send(user);
+        const product = new Product(req.body);
+        await product.save();
+        res.status(200).send(product);
     } catch (error) {
         res.status(400).send(error);
     }
@@ -34,11 +34,11 @@ const post = async (req, res) => {
 
 const deleteById = async (req, res) => {
     try {
-        const user = await User.findByIdAndDelete(req.params.id);
-        if (!user) {
+        const product = await Product.findByIdAndDelete(req.params.id);
+        if (!product) {
             return res.status(404).send();
         }
-        res.status(200).send(user);
+        res.status(200).send(product);
     } catch (error) {
         res.status(500).send(error);
     }
@@ -46,11 +46,11 @@ const deleteById = async (req, res) => {
 
 const update = async (req, res) => {
     try {
-        const user = await User.findByIdAndUpdate(req.body.id, req.body, { new: true, runValidators: true });
-        if (!user) {
+        const product = await Product.findByIdAndUpdate(req.body.id, req.body, { new: true, runValidators: true });
+        if (!product) {
             return res.status(404).send();
         }
-        res.status(200).send(user);
+        res.status(200).send(product);
     } catch (error) {
         res.status(400).send(error);
     }
