@@ -47,7 +47,7 @@ const deleteById = async (req, res) => {
 
 const update = async (req, res) => {
     try {
-        const product = await Product.findByIdAndUpdate(req.body.id, req.body, { new: true, runValidators: true });
+        const product = await Product.findByIdAndUpdate(req.body.Id, req.body, { new: true, runValidators: true });
         if (!product) {
             return res.status(404).send();
         }
