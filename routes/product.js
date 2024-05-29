@@ -27,4 +27,10 @@ userRoute.put(`/${controller}/update`, async (req, res) => {
     return productController.update(req, res)
 });
 
+// Delete ids
+userRoute.post(`/${controller}/deleteIds`, async (req, res) => {
+    console.log(req)
+    return productController.deleteByIds(req, res)
+});
+
 module.exports = userRoute

@@ -57,10 +57,23 @@ const update = async (req, res) => {
     }
 }
 
+const deleteByIds = async (req, res) => {
+    try {
+        const product = await Product.deleteMany({ _id: { $in:  req.body.ids} });
+        if (!product) {
+            return res.status(404).send();
+        }
+        res.status(200).send(product);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+}
+
 module.exports = {
     get,
     post,
     getById,
     deleteById,
-    update
+    update,
+    deleteByIds
 }
