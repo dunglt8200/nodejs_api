@@ -19,7 +19,7 @@ const get = async (req, res) => {
 const getById = async (req, res) => {
     try {
         const product = await Product.findById(req.params.id);
-        if (!user) {
+        if (!product) {
             return res.status(404).send();
         }
         res.status(200).send(product);
@@ -55,6 +55,8 @@ const deleteById = async (req, res) => {
 
 const update = async (req, res) => {
     try {
+        const Img = req.file ? req.file.path : '';
+        req.body.Img = Img;
         const product = await Product.findByIdAndUpdate(req.body.Id, req.body, { new: true, runValidators: true });
         if (!product) {
             return res.status(404).send();

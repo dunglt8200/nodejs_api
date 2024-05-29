@@ -25,7 +25,7 @@ userRoute.delete(`/${controller}/:id`, async (req, res) => {
 });
 
 // Update
-userRoute.put(`/${controller}/update`, async (req, res) => {
+userRoute.put(`/${controller}/update`, upload.single('Img'), async (req, res) => {
     return productController.update(req, res)
 });
 
