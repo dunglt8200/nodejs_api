@@ -1,7 +1,9 @@
-const express = require('express')
-const userRoute = express()
-const productController = require('../controllers/product')
-const controller = 'product'
+const express = require('express');
+const userRoute = express();
+const productController = require('../controllers/product');
+const controller = 'product';
+const upload = require('../utils/upload');
+
 //Get all
 userRoute.get(`/${controller}/getlist`, (req, res) => {
     return productController.get(req, res)
@@ -13,7 +15,7 @@ userRoute.get(`/${controller}/:id`, async (req, res) => {
 });
 
 // Create
-userRoute.post(`/${controller}/create`, async (req, res) => {
+userRoute.post(`/${controller}/create`,upload.single('Img'), async (req, res) => {
     return productController.post(req, res)
 });
 
