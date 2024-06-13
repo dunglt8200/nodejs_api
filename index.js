@@ -2,7 +2,8 @@ const express = require('express')
 const morgan = require('morgan')
 const path = require('path')
 const app = express()
-const userRoute = require('./routes/product')
+const productRoute = require('./routes/product')
+const productTypeRoute = require('./routes/product_type')
 const configMongodb = require('./config/mongodb')
 const bodyParser = require('body-parser')
 const cors = require('cors')
@@ -26,7 +27,8 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json())
 
 //routes
-app.use(userRoute)
+app.use(productRoute)
+app.use(productTypeRoute)
 
 //mongodb
 configMongodb.connectToMongo()
