@@ -35,7 +35,7 @@ const getById = async (req, res) => {
 
 const deleteByIds = async (req, res) => {
     try {
-        const productType = await productType.deleteMany({ _id: { $in:  req.body.ids} });
+        const productType = await ProductType.deleteMany({ _id: { $in:  req.body.ids} });
         if (!productType) {
             return res.status(404).send();
         }
