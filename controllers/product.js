@@ -1,16 +1,25 @@
 const Product = require('../models/product');
+const ProductType = require('../models/product_type');
 const Utils = require('../utils/util');
 
 const get = async (req, res) => {
     try {
         const products = await Product.find();
+        const productTypes = await ProductType.find();
+
         products.map(product => {
             if (product.Img) {
                 product.Img = Utils.convertFilePathToURL(product.Img)
             } else {
                 product.Img = 'default_image_url.jpg';
             }});
-        res.status(200).send(products);
+
+        const productReponses = products.map(product => ({
+            ...product.toObject(),
+            ProductTypeName: productTypes.find(x => x.Code == product.ProductType)?.Name
+        }));
+
+        res.status(200).send(productReponses);
     } catch (error) {
         res.status(500).send(error);
     }
