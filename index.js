@@ -4,6 +4,7 @@ const path = require('path')
 const app = express()
 const productRoute = require('./routes/product')
 const productTypeRoute = require('./routes/product_type')
+const statusRoute = require('./routes/status')
 const configMongodb = require('./config/mongodb')
 const bodyParser = require('body-parser')
 const cors = require('cors')
@@ -29,6 +30,7 @@ app.use(bodyParser.json())
 //routes
 app.use(productRoute)
 app.use(productTypeRoute)
+app.use(statusRoute)
 
 //mongodb
 configMongodb.connectToMongo()
