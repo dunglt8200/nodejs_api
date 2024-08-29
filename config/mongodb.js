@@ -1,13 +1,16 @@
 const mongoClient = require('mongoose');
+require('dotenv').config();
 
 const connectToMongo = () => {
-    const dbName = "Organic_Food_Shop";
-    const connectionStringCom = "mongodb+srv://dunglth82:Admin%40123@cluster0.w2oedq9.mongodb.net";
-    const connectionStringLocal = "mongodb://127.0.0.1:27017";
+    const dbName = process.env.DB_NAME;
+    const connectionStringLocal = process.env.MONGO_LOCAL_URL;
+    const connectionStringCom = process.env.MONGO_COM_URL;
 
     // Determine which connection string to use based on the environment
     const connectionString = process.env.NODE_ENV === 'development' ? `${connectionStringLocal}/${dbName}` : `${connectionStringCom}/${dbName}`;
-    
+    console.log("a", process.env.NODE_ENV)
+    console.log("b", connectionString)
+
     mongoClient.connect(connectionString, {
         useNewUrlParser: true,
         useUnifiedTopology: true
