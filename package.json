@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon --inspect index.js",
     "dev": "cross-env NODE_ENV=development nodemon --inspect index.js",
-    "built": "cross-env NODE_ENV=production nodemon --inspect index.js"
+    "build": "cross-env NODE_ENV=production nodemon --inspect index.js"
   },
   "author": "",
   "license": "ISC",
