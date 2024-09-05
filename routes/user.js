@@ -27,4 +27,9 @@ userRoute.post(`/${controller}/deleteIds`, async (req, res) => {
     return userController.deleteByIds(req, res)
 });
 
+// Login
+userRoute.post(`/${controller}/login`, async (req, res) => {
+    return userController.login(req, res)
+});
+
 module.exports = userRoute
