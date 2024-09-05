@@ -4,9 +4,9 @@ const Utils = require('../utils/util');
 const insert = async (req, res) => {
     try {
         const user = new User(req.body);
-        user.Password = Utils.hashPassword(user.Password);
+        user.Password = await Utils.hashPassword(user.Password);
         await user.save();
-        res.status(200);
+        res.status(200).send(user.UserName);
     } catch (error) {
         res.status(500).send(error);
     }
@@ -39,7 +39,7 @@ const deleteByIds = async (req, res) => {
         if (!user) {
             return res.status(404);
         }
-        res.status(200);
+        res.status(200).send();
     } catch (error) {
         res.status(500).send(error);
     }
@@ -51,7 +51,7 @@ const update = async (req, res) => {
         if (!user) {
             return res.status(404);
         }
-        res.status(200).send(user);
+        res.status(200).send(user.UserName);
     } catch (error) {
         res.status(400).send(error);
     }
