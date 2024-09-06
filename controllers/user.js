@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const Utils = require('../utils/util');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const insert = async (req, res) => {
     try {
@@ -61,29 +62,20 @@ const update = async (req, res) => {
 const login = async (req, res) => {
     try {
         const { UserName, Password } = req.body;
-
-        // Find the user by username
         const user = await User.findOne({ UserName });
 
         if (!user) {
-            // User not found
-            return res.status(200).send(false);
+            return res.status(200).send({isCheckLogin: false});
         }
-
-        // Compare the provided password with the hashed password in the database
         const isMatch = await bcrypt.compare(Password, user.Password);
-
         if (isMatch) {
-            // Password matches
-            res.status(200).send(true);
+            const token = jwt.sign({ username: user.username }, process.env.JWT_SECRET, { expiresIn: '10m' });
+            return res.status(200).send({isCheckLogin: true, token: token});
         } else {
-            // Password does not match
-            res.status(200).send(false);
+            return res.status(200).send({isCheckLogin: false});
         }
     } catch (error) {
-        // Handle any errors
-        console.error(error);
-        res.status(200).send(false);
+        return res.status(200).send({isCheckLogin: false});
     }
 }
 

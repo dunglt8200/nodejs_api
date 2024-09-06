@@ -8,8 +8,6 @@ const connectToMongo = () => {
 
     // Determine which connection string to use based on the environment
     const connectionString = process.env.NODE_ENV === 'development' ? `${connectionStringLocal}/${dbName}` : `${connectionStringCom}/${dbName}`;
-    console.log("a", process.env.NODE_ENV)
-    console.log("b", connectionString)
 
     mongoClient.connect(connectionString, {
         useNewUrlParser: true,

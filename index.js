@@ -5,7 +5,8 @@ const app = express()
 const configMongodb = require('./config/mongodb')
 const bodyParser = require('body-parser')
 const RouteManager = require('./config/RouteManager');
-const cors = require('cors')
+const cors = require('cors');
+const authenticateToken = require('./config/authenticateToken');
 
 //cors
 app.use(cors())
@@ -24,6 +25,13 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json())
+
+//headers
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); 
+
+//authen
+app.use(authenticateToken);
 
 //routes
 const routeManager = new RouteManager(app);
