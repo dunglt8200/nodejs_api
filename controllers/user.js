@@ -69,13 +69,29 @@ const login = async (req, res) => {
         }
         const isMatch = await bcrypt.compare(Password, user.Password);
         if (isMatch) {
-            const token = jwt.sign({ username: user.username }, process.env.JWT_SECRET, { expiresIn: '10m' });
-            return res.status(200).send({isCheckLogin: true, token: token});
+            const token = jwt.sign({ id: user.id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1m' });
+            const refreshtoken = jwt.sign({ id: user.id }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });       
+            return res.status(200).send({isCheckLogin: true, token: token, refreshtoken: refreshtoken});
         } else {
             return res.status(200).send({isCheckLogin: false});
         }
     } catch (error) {
         return res.status(200).send({isCheckLogin: false});
+    }
+}
+
+const refreshToken = async (req, res) => {
+    try {
+        const refreshToken = req.body.refreshtoken;
+        if (!refreshToken) return res.status(401).json({ message: 'Refresh token required' });
+
+        jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+            if (err) return res.status(403).json({ message: 'Invalid refresh token' });
+            const newAccessToken = jwt.sign({ id: user.id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1m' });
+            res.json({ accessToken: newAccessToken });
+        });
+    } catch (error) {
+        return res.status(403).json(error);
     }
 }
 
@@ -85,5 +101,6 @@ module.exports = {
     getById,
     deleteByIds,
     update,
-    login
+    login,
+    refreshToken
 }

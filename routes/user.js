@@ -32,4 +32,9 @@ userRoute.post(`/${controller}/login`, async (req, res) => {
     return userController.login(req, res)
 });
 
+// refresh-token
+userRoute.post(`/${controller}/refresh-token`, async (req, res) => {
+    return userController.refreshToken(req, res)
+});
+
 module.exports = userRoute

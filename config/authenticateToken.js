@@ -3,7 +3,8 @@
 const jwt = require('jsonwebtoken');
 
 const authenticateToken = (req, res, next) => {
-  if (req.originalUrl.startsWith('/user/login') || req.originalUrl.startsWith('/user/register')) {
+  if (req.originalUrl.startsWith('/user/login') || req.originalUrl.startsWith('/user/register') 
+      || req.originalUrl.startsWith('/user/refresh-token')) {
     return next(); // Allow public routes
   }
 
@@ -14,7 +15,7 @@ const authenticateToken = (req, res, next) => {
     return res.sendStatus(401);
   }
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
     if (err) {
       return res.sendStatus(403); // Forbidden if token is invalid
     }
