@@ -69,7 +69,7 @@ const login = async (req, res) => {
         }
         const isMatch = await bcrypt.compare(Password, user.Password);
         if (isMatch) {
-            const token = jwt.sign({ id: user.id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1m' });
+            const token = jwt.sign({ id: user.id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '5m' });
             const refreshtoken = jwt.sign({ id: user.id }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });       
             return res.status(200).send({isCheckLogin: true, token: token, refreshtoken: refreshtoken});
         } else {
@@ -87,7 +87,7 @@ const refreshToken = async (req, res) => {
 
         jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
             if (err) return res.status(403).json({ message: 'Invalid refresh token' });
-            const newAccessToken = jwt.sign({ id: user.id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1m' });
+            const newAccessToken = jwt.sign({ id: user.id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '5m' });
             res.json({ accessToken: newAccessToken });
         });
     } catch (error) {
