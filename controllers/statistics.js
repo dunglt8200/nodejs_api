@@ -17,6 +17,21 @@ const thongKeLoaiSanPham = async (req, res) => {
     }
 }
 
+const thongKeSanPhamSapHet = async (req, res) => {
+    try {
+        const products = (await Product.find()).filter(i => i.Quantity < 10);
+        const thongKeResults = [];
+        for (const product of products) {
+            const thongKe = new ThongKeViewModel(product.id, product.Name, product.Quantity);
+            thongKeResults.push(thongKe.toResponse());
+        }
+        res.status(200).send(thongKeResults);
+    } catch(error) {
+        res.status(500).send(error);
+    }
+}
+
 module.exports = {
-    thongKeLoaiSanPham
+    thongKeLoaiSanPham,
+    thongKeSanPhamSapHet
 }
