@@ -61,7 +61,7 @@ const update = async (req, res) => {
         if (!oldNew) {
             return res.status(404).send();
         }
-        const Img = req.file ? req.file.path : '';
+        const Img = req.file ? req.file.path : oldNew.Img;
         req.body.Img = Img;
         req.body.DateCreate = oldNew.DateCreate;
         const resNew = await New.findByIdAndUpdate(req.body.Id, req.body, { new: true, runValidators: true });

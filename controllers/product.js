@@ -64,7 +64,11 @@ const deleteById = async (req, res) => {
 
 const update = async (req, res) => {
     try {
-        const Img = req.file ? req.file.path : '';
+        const productOld = Product.findById(req.body.Id);
+        if (!productOld) {
+            return res.status(404).send();
+        }
+        const Img = req.file ? req.file.path : productOld.Img;
         req.body.Img = Img;
         const product = await Product.findByIdAndUpdate(req.body.Id, req.body, { new: true, runValidators: true });
         if (!product) {
