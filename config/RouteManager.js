@@ -4,6 +4,7 @@ const productTypeRoute = require('../routes/product_type');
 const statusRoute = require('../routes/status');
 const userRoute = require('../routes/user');
 const statisticsRoute = require('../routes/statistics');
+const newRoute = require('../routes/new');
 
 class RouteManager {
     constructor(app) {
@@ -16,6 +17,7 @@ class RouteManager {
         this.app.use(statusRoute);
         this.app.use(userRoute);
         this.app.use(statisticsRoute);
+        this.app.use(newRoute);
     }
 }
 

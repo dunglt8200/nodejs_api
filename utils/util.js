@@ -5,7 +5,7 @@ const generateRandomNumber = () => {
 }
 
 const convertFilePathToURL = (filePath) => {
-    const baseUrl = `http://localhost:3000/`;
+    const baseUrl = `http://localhost:3002/`;
     const urlPath = filePath.replace(/\\/g, '/');
     const cleanedPath = urlPath.replace(/^public\//, '');
     return `${baseUrl}${cleanedPath}`;
